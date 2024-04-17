@@ -1,16 +1,16 @@
 const express = require("express");
-const nxb = require("../controllers/nxb.controller");
+const nxbs = require("../controllers/nxb.controller");
 
 const router = express.Router();
 
 router.route("/")
-    .get(nxb.findAll)
-    .post(nxb.create)
-    .delete(nxb.deleteAll);
+    .get(nxbs.findAll)
+    .post(nxbs.create)
+    .delete(nxbs.deleteAll);
 
 router.route("/:id")
-    .get(nxb.findOne)
-    .put(nxb.update)
-    .delete(nxb.delete);
+    .get(nxbs.findOne)
+    .put(nxbs.update)
+    .delete(nxbs.delete);
 
 module.exports = router;
