@@ -1,8 +1,6 @@
-const { ObjectId } = require("mongodb");
-
 class GuestService {
     constructor(client) {
-        this.Guest = client.db().collection("NhaXuatBan");
+        this.Guest = client.db().collection("DocGia");
     }
     extractConactData(payload) {
         const guest = {
@@ -12,6 +10,8 @@ class GuestService {
             phai: payload.phai,
             diaChi: payload.diaChi,
             dienThoai: payload.dienThoai,
+            taiKhoan: payload.taiKhoan,
+            password: payload.password,
         };
 
         Object.keys(guest).forEach(

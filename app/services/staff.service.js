@@ -1,16 +1,16 @@
-const { ObjectId } = require("mongodb");
 
 class StaffService {
     constructor(client) {
-        this.Staff = client.db().collection("NhaXuatBan");
+        this.Staff = client.db().collection("NhanVien");
     }
     extractConactData(payload) {
         const staff = {
-            hoTen: payload.hoten,
+            hoTen: payload.hoTen,
+            taiKhoan: payload.taiKhoan,
             password: payload.password,
             chucVu: payload.chucVu,
-            diaChi: payload.diachi,
-            soDienThoai: payload.soDienThoai
+            diaChi: payload.diaChi,
+            soDienThoai: payload.soDienThoai,
         };
 
         Object.keys(staff).forEach(

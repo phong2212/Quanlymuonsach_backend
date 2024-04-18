@@ -1,33 +1,32 @@
 const { ObjectId } = require("mongodb");
 
-class StaffService {
+class BorrowService {
     constructor(client) {
-        this.Staff = client.db().collection("NhaXuatBan");
+        this.Borrow = client.db().collection("TheoDoiMuonSach");
     }
     extractConactData(payload) {
-        const staff = {
-            hoTen: payload.hoten,
-            password: payload.password,
-            chucVu: payload.chucVu,
-            diaChi: payload.diachi,
-            soDienThoai: payload.soDienThoai
+        const borrow = {
+            maDocGia: payload.maDocGia,
+            maSach: payload.maSach,
+            ngayMuon: payload.ngayMuon,
+            ngayTra: payload.ngayTra,
         };
 
-        Object.keys(staff).forEach(
-            (key) => staff[key] === undefined && delete staff[key]
+        Object.keys(borrow).forEach(
+            (key) => borrow[key] === undefined && delete borrow[key]
         );
-        return staff;
+        return borrow;
     }
 
     async create(payload) {
-        const staff = this.extractConactData(payload);
-        const result = await this.Staff.findOneAndUpdate(
-            staff,
-            { $set: staff },
+        const borrow = this.extractConactData(payload);
+        const result = await this.Borrow.findOneAndUpdate(
+            borrow,
+            { $set: borrow },
             { returnDocument: "after", upsert: true }
         );
         return result;
     }
 }
 
-module.exports = StaffService;
+module.exports = BorrowService;

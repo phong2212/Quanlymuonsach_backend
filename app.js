@@ -3,6 +3,12 @@ const cors = require("cors");
 const ApiError = require("./app/api-error");
 const booksRouter = require("./app/routes/book.route");
 const nxbRouter = require("./app/routes/nxb.route");
+const staffRouter = require("./app/routes/staff.route");
+const guestRouter = require("./app/routes/guest.route");
+const borrowRouter = require("./app/routes/borrow.route");
+
+
+
 
 
 const app = express();
@@ -17,6 +23,15 @@ app.get("/", (req, res) => {
 app.use("/api/books", booksRouter);
 
 app.use("/api/nxb", nxbRouter);
+
+app.use("/api/staff", staffRouter);
+
+app.use("/api/guest", guestRouter);
+
+app.use("/api/borrow", borrowRouter);
+
+
+
 
 
 app.use((req, res, next) => {
