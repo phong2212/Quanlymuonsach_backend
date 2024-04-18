@@ -14,28 +14,30 @@ exports.create = async (req, res, next) => {
         const document = await staffService.create(req.body);
         return res.send(document);
     } catch (error) {
-        console.log(error);
         return next(
             new ApiError(500, "An error occurred while creating the staff")
         );
     }
 };
 
-exports.findOne = async (req, res, next) => {
+exports.findAll = async (req, res, next) => {
+    let documents = [];
+
     try {
         const staffService = new StaffService(MongoDB.client);
-        const document = await staffService.findById(req.params.id);
-        if (!document) {
-            return next(new ApiError(404, "Staff not found"));
+        const { name } = req.query;
+        if (name) {
+            documents = await staffService.findByName(name);
+        } else {
+            documents = await staffService.find({});
         }
-        return res.send(document);
     } catch (error) {
         return next(
-            new ApiError(
-                500,
-                'Error retrieving staff with id=${req.params.id}'
-            )
+            new ApiError(500, "An error occurred while retrieving the staffs")
         );
     }
+
+    return res.send(documents);
 };
+
 

@@ -29,6 +29,16 @@ class GuestService {
         );
         return result;
     }
+
+    async find(filter) {
+        const cursor = await this.Guest.find(filter);
+        return await cursor.toArray();
+    }
+    async findByName(name) {
+        return await this.find({
+            name: { $regex: new RegExp(name), $options: "i" },
+        });
+    }
 }
 
 module.exports = GuestService;

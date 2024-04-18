@@ -21,21 +21,24 @@ exports.create = async (req, res, next) => {
     }
 };
 
-exports.findOne = async (req, res, next) => {
+exports.findAll = async (req, res, next) => {
+    let documents = [];
+
     try {
         const guestService = new GuestService(MongoDB.client);
-        const document = await guestService.findById(req.params.id);
-        if (!document) {
-            return next(new ApiError(404, "Guest not found"));
+        const { name } = req.query;
+        if (name) {
+            documents = await guestService.findByName(name);
+        } else {
+            documents = await guestService.find({});
         }
-        return res.send(document);
     } catch (error) {
+        console.log(error);
         return next(
-            new ApiError(
-                500,
-                'Error retrieving guest with id=${req.params.id}'
-            )
+            new ApiError(500, "An error occurred while retrieving the guests")
         );
     }
+
+    return res.send(documents);
 };
 
