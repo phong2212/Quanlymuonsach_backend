@@ -77,36 +77,3 @@ exports.update = async (req, res, next) => {
         );
     }
 };
-
-exports.delete = async (req, res, next) => {
-    try {
-        const borrowService = new BorrowService(MongoDB.client);
-        const document = await borrowService.delete(req.params.id);
-        if (!document) {
-            return next(new ApiError(404, "Borrow not found"));
-        }
-        return res.send({ message: "Borrow was deleted successfully" });
-    } catch (error) {
-        return next(
-            new ApiError(
-                500,
-                `Could not delete borrow with id=${req.params.id}`
-            )
-        );
-    }
-};
-
-exports.deleteAll = async (_req, res, next) => {
-    try {
-        const borrowService = new BorrowService(MongoDB.client);
-        const deletedCount = await borrowService.deleteAll();
-        return res.send({
-            message: `${deletedCount} borrows were deleted successfully`,
-        });
-    } catch (error) {
-        console.log(error);
-        return next(
-            new ApiError(500, "An error occurred while removing all borrows")
-        );
-    }
-};

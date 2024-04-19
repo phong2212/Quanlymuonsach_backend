@@ -7,5 +7,7 @@ router.route("/")
     .get(staffs.findAll)
     .post(staffs.create)
 
+router.route("/:id")
+    .get(staffs.findOne)
 
 module.exports = router;

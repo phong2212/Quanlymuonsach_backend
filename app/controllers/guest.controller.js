@@ -42,3 +42,20 @@ exports.findAll = async (req, res, next) => {
     return res.send(documents);
 };
 
+exports.findOne = async (req, res, next) => {
+    try {
+        const guestService = new GuestService(MongoDB.client);
+        const document = await guestService.findById(req.params.id);
+        if (!document) {
+            return next(new ApiError(404, "Guest not found"));
+        }
+        return res.send(document);
+    } catch (error) {
+        return next(
+            new ApiError(
+                500,
+                'Error retrieving guest with id=${req.params.id}'
+            )
+        );
+    }
+};

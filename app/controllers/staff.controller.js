@@ -40,4 +40,22 @@ exports.findAll = async (req, res, next) => {
     return res.send(documents);
 };
 
+exports.findOne = async (req, res, next) => {
+    try {
+        const staffService = new StaffService(MongoDB.client);
+        const document = await staffService.findById(req.params.id);
+        if (!document) {
+            return next(new ApiError(404, "Staff not found"));
+        }
+        return res.send(document);
+    } catch (error) {
+        return next(
+            new ApiError(
+                500,
+                'Error retrieving staff with id=${req.params.id}'
+            )
+        );
+    }
+};
+
 

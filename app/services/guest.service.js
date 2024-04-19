@@ -1,3 +1,6 @@
+const { ObjectId } = require("mongodb");
+
+
 class GuestService {
     constructor(client) {
         this.Guest = client.db().collection("DocGia");
@@ -34,9 +37,9 @@ class GuestService {
         const cursor = await this.Guest.find(filter);
         return await cursor.toArray();
     }
-    async findByName(name) {
-        return await this.find({
-            name: { $regex: new RegExp(name), $options: "i" },
+    async findById(id) {
+        return await this.Guest.findOne({
+            _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
         });
     }
 }
